@@ -32,6 +32,12 @@ public class Character
     [Range(0f, 1f)]
     public int emotionalnessMax;
 
+    public string friendlinessDescription;
+    public string irritabilityDescription;
+    public string humourDescription;
+    public string flirtinessDescription;
+    public string emotionalnessDescription;
+
     public int friendliness;
     public int irritability;
     public int humour;

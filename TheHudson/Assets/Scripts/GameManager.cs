@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
             // City
             if (character.country == "United States")
             {
-                character.city = ChooseFrom("New York", "Los Angeles", "Chicago", "Seattle", "Portland", "San Francisco", "Houston", "Dallas", "Austin", "Milwaukee", "Minneapolis", "Columbus", "Cleveland", "Indianapolis", "Kansas City", "St. Louis", "Miami", "Boston", "Providence", "Phoenix", "Denver", "Salt Lake City", "Omaha", "Fargo", "Philadelphia", "Pittsburgh", "Cincinnati", "San Diego", "Honolulu", "Anchorage", "Detroit", "New Orleans", "Washington D.C.", "Atlanta", "Tampa");
+                character.city = ChooseFrom("New York", "Los Angeles", "Chicago", "Seattle", "Portland", "Las Vegas", "San Francisco", "San Antonio", "Jackson", "Little Rock", "Birmingham", "Houston", "Dallas", "Albuquerque", "Austin", "Milwaukee", "Minneapolis", "Columbus", "Cleveland", "Indianapolis", "Kansas City", "St. Louis", "Miami", "Boston", "Providence", "Phoenix", "Denver", "Salt Lake City", "Omaha", "Fargo", "Philadelphia", "Pittsburgh", "Cincinnati", "San Diego", "Honolulu", "Anchorage", "Detroit", "New Orleans", "Washington D.C.", "Atlanta", "Tampa");
             }
             else if (character.country == "Canada")
             {
@@ -68,11 +68,49 @@ public class GameManager : MonoBehaviour
             // Ethnicity
             if (character.country == "United States")
             {
-                character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 20), new DataClass("black", 15), new DataClass("east asian", 5), new DataClass("south asian", 5), new DataClass("middle eastern", 3), new DataClass("native american", 1), new DataClass("pacific islander", 1));
+                if (character.city == "Honolulu")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 15), new DataClass("latino", 0), new DataClass("black", 0), new DataClass("east asian", 30), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 52));
+                }
+                else if (character.city == "Los Angeles" || character.city == "Dallas" || character.city == "Houston" || character.city == "San Antonio" || character.city == "Austin")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 25), new DataClass("latino", 35), new DataClass("black", 20), new DataClass("east asian", 15), new DataClass("south asian", 2), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 1));
+                }
+                else if (character.city == "New Orleans" || character.city == "Jackson" || character.city == "Birmingham" || character.city == "Little Rock")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 21), new DataClass("latino", 10), new DataClass("black", 60), new DataClass("east asian", 5), new DataClass("south asian", 2), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 0));
+                }
+                else if (character.city == "Albuquerque")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 20), new DataClass("latino", 15), new DataClass("black", 10), new DataClass("east asian", 2), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 51), new DataClass("pacific islander", 0));
+                }
+                else if (character.city == "Detroit")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 15), new DataClass("latino", 8), new DataClass("black", 50), new DataClass("east asian", 2), new DataClass("south asian", 5), new DataClass("middle eastern", 20), new DataClass("native american", 0), new DataClass("pacific islander", 0));
+                }
+                else if (character.city == "Anchorage")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 0), new DataClass("black", 3), new DataClass("east asian", 5), new DataClass("south asian", 2), new DataClass("middle eastern", 3), new DataClass("native american", 7), new DataClass("pacific islander", 0), new DataClass("inuit", 30));
+                }
+                else
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 20), new DataClass("black", 15), new DataClass("east asian", 5), new DataClass("south asian", 5), new DataClass("middle eastern", 3), new DataClass("native american", 1), new DataClass("pacific islander", 1));
+                }
             }
             else if (character.country == "Canada")
             {
-                character.ethnicGroup = ChooseFrom(new DataClass("white", 55), new DataClass("latino", 2), new DataClass("black", 5), new DataClass("east asian", 11), new DataClass("south asian", 13), new DataClass("middle eastern", 9), new DataClass("native american", 5), new DataClass("pacific islander", 0));
+                if (character.city == "Iqaluit")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 0), new DataClass("black", 3), new DataClass("east asian", 5), new DataClass("south asian", 2), new DataClass("middle eastern", 3), new DataClass("native american", 7), new DataClass("pacific islander", 0), new DataClass("inuit", 30));
+                }
+                else if (character.city == "Yellowknife" || character.city == "Iqaluit")
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 0), new DataClass("black", 3), new DataClass("east asian", 4), new DataClass("south asian", 3), new DataClass("middle eastern", 3), new DataClass("native american", 32), new DataClass("pacific islander", 0), new DataClass("inuit", 5));
+                }
+                else
+                {
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 56), new DataClass("latino", 1), new DataClass("black", 5), new DataClass("east asian", 11), new DataClass("south asian", 13), new DataClass("middle eastern", 9), new DataClass("native american", 5), new DataClass("pacific islander", 0));
+                }
             }
             else if (character.country == "Mexico")
             {
@@ -210,7 +248,7 @@ public class GameManager : MonoBehaviour
             }
             else if (character.gender == "female")
             {
-                if (PercentChance(76))
+                if (PercentChance(88))
                 {
                     // Average
                     character.height = Random.Range(162, 169);
@@ -249,7 +287,18 @@ public class GameManager : MonoBehaviour
             character.heightFeetAndInches = (inches / 12).ToString().Substring(0, 1) + "ft " + Mathf.Round(inches % 12) + "in";
 
             // Occupation
-            character.occupation = ChooseFrom(" student", " plumber", " model", "n athlete", " librarian", " painter", " drawer", "n actor");
+            if (character.age < 27)
+            {
+                character.occupation = ChooseFrom(" student", " plumber", " model", "n athlete", " librarian", " painter", " drawer", "n actor", " powerlifter", " translator", " singer", " photographer", " software developer");
+            }
+            else if (character.age >= 27 && character.age < 36)
+            {
+                character.occupation = ChooseFrom(" plumber", " model", "n athlete", " librarian", " painter", " drawer", "n actor", " teacher", " powerlifter", " translator", " singer", " photographer", " software developer");
+            }
+            else
+            {
+                character.occupation = ChooseFrom(" plumber", " librarian", " painter", " drawer", "n actor", " professor", " translator", " singer", " photographer", " software developer");
+            }
 
             // Personality
             character.friendlinessMax = Random.Range(20, 100);
@@ -266,94 +315,95 @@ public class GameManager : MonoBehaviour
 
             if (character.friendlinessMax <= 40)
             {
-                friendliness = "very unfriendly";
+                character.friendlinessDescription = "very unfriendly";
             }
             if (character.friendlinessMax <= 60)
             {
-                friendliness = "standoffish";
+                character.friendlinessDescription = "standoffish";
             }
             if (character.friendlinessMax <= 70)
             {
-                friendliness = "warm";
+                character.friendlinessDescription = "warm";
             }
             if (character.friendlinessMax <= 90)
             {
-                friendliness = "very friendly";
+                character.friendlinessDescription = "very friendly";
             }
 
             if (character.irritabilityMax <= 40)
             {
-                irritability = "extremely hot-headed";
+                character.irritabilityDescription = "extremely hot-headed";
             }
             if (character.irritabilityMax <= 60)
             {
-                irritability = "hot-headed";
+                character.irritabilityDescription = "hot-headed";
             }
             if (character.irritabilityMax <= 70)
             {
-                irritability = "congeinial";
+                character.irritabilityDescription = "congeinial";
             }
             if (character.irritabilityMax <= 90)
             {
-                irritability = "very level-headed";
+                character.irritabilityDescription = "very level-headed";
             }
 
             if (character.flirtinessMax <= 40)
             {
-                flirtiness = "asexual";
+                character.flirtinessDescription = "asexual";
             }
             if (character.flirtinessMax <= 60)
             {
-                flirtiness = "prudish";
+                character.flirtinessDescription = "prudish";
             }
             if (character.flirtinessMax <= 70)
             {
-                flirtiness = "flirtatious";
+                character.flirtinessDescription = "flirtatious";
             }
             if (character.flirtinessMax <= 90)
             {
-                flirtiness = "highly flirtatious";
+                character.flirtinessDescription = "highly flirtatious";
             }
 
             if (character.humourMax <= 40)
             {
-                humour = "boring";
+                character.humourDescription = "boring";
             }
             if (character.humourMax <= 60)
             {
-                humour = "slightly serious";
+                character.humourDescription = "slightly serious";
             }
             if (character.humourMax <= 70)
             {
-                humour = "humourous";
+                character.humourDescription = "humourous";
             }
             if (character.humourMax <= 90)
             {
-                humour = "a comical genius";
+                character.humourDescription = "a comical genius";
             }
 
             if (character.emotionalnessMax <= 40)
             {
-                emotionalness = "an emotional wreck";
+                character.emotionalnessDescription = "an emotional wreck";
             }
             if (character.emotionalnessMax <= 60)
             {
-                emotionalness = "highly emotional";
+                character.emotionalnessDescription = "highly emotional";
             }
             if (character.emotionalnessMax <= 70)
             {
-                emotionalness = "quite reasonable emotionally";
+                character.emotionalnessDescription = "quite reasonable emotionally";
             }
             if (character.emotionalnessMax <= 90)
             {
-                emotionalness = "very emotionally sound";
+                character.emotionalnessDescription = "very emotionally sound";
             }
             
             Debug.Log
                 (
                 character.firstName + " is from " + character.city + ", " + character.country + ".\n" +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.ethnicity + " and " + character.pronouns[2].ToLower() + " occupation is a" + character.occupation + ". " +
-                character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.age + "-years-old and " + character.pronouns[5].ToLower() + " " + character.height + "cm/" + character.heightFeetAndInches + " tall."
+                character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.age + "-years-old and " + character.pronouns[5].ToLower() + " " + character.height + "cm/" + character.heightFeetAndInches + " tall.\n" +
+                character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.friendlinessDescription + ", " + character.irritabilityDescription + ", " + character.flirtinessDescription + ", " + character.humourDescription + ", and " + character.emotionalnessDescription + "."
                 );
         }
     }
