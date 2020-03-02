@@ -5,10 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<Character> characters = new List<Character>();
+    public List<Room> rooms = new List<Room>();
 
     // Start is called before the first frame update
     void Start()
     {
+        // Create the characters
         while (characters.Count < 11)
         {
             // Create a new character
@@ -48,27 +50,45 @@ public class GameManager : MonoBehaviour
             }
 
             // Country
-            //character.country = ChooseFrom("united states", "canada", "mexico");
-            character.country = ChooseFrom(new DataClass("United States", 50), new DataClass("Canada", 25), new DataClass("Mexico", 25));
+            character.country = ChooseFrom(new DataClass("United States", 100), new DataClass("Canada", 25), new DataClass("Mexico", 15), new DataClass("Argentina", 5), new DataClass("Cuba", 5));
 
-            // City
+            // City and State
             if (character.country == "United States")
             {
-                character.city = ChooseFrom("New York", "Los Angeles", "Chicago", "Seattle", "Portland", "Las Vegas", "San Francisco", "San Antonio", "Jackson", "Little Rock", "Birmingham", "Houston", "Dallas", "Albuquerque", "Austin", "Milwaukee", "Minneapolis", "Columbus", "Cleveland", "Indianapolis", "Kansas City", "St. Louis", "Miami", "Boston", "Providence", "Phoenix", "Denver", "Salt Lake City", "Omaha", "Fargo", "Philadelphia", "Pittsburgh", "Cincinnati", "San Diego", "Honolulu", "Anchorage", "Detroit", "New Orleans", "Washington D.C.", "Atlanta", "Tampa");
+                character.city = ChooseFrom("New York, NY", "Brooklyn, NY", "Queens, NY", "The Bronx, NY", "Staten Island, NY", "Los Angeles, CA", "Chicago, IL", "Seattle, WA", "Portland, OR", "Charlotte, NC", "Burlington, VT", "Virginia Beach, VA", "Las Vegas, NV", "Madison, WI", "Green Bay, WI", "Oklahoma City, OK", "Charleston, WV", "Charlestone, SC", "Iowa City, IA", "Des Moines, IA", "San Jose, TX", "Oakland, CA", "Evanston, IL", "Wichita, KS", "Louisville, KY", "Topeka, KS", "San Francisco, CA", "San Antonio, TX", "Jacksonville, FL", "Memphis, TN", "Nashville, TN", "Raleigh, NC", "Richmond, VA", "Baltimore, MD", "Jackson, MS", "Manchester, NH", "Newark, NJ", "Jersey City, NJ", "Buffalo, NY", "Little Rock, AR", "Sioux Falls, SD", "Boise, ID", "Billings, MT", "Cheyenne, WY", "Birmingham, AL", "Houston, TX", "Dallas, TX", "Albuquerque, NM", "Austin, TX", "Milwaukee, WI", "Minneapolis, MN", "St. Paul, MN", "Duluth, MN", "Columbus, OH", "Dayton, OH", "Cleveland, OH", "Indianapolis, IN", "Fort Wayne, IN", "Kansas City, MO", "St. Louis, MO", "Miami, FL", "Boston, MA", "Providence, RI", "Phoenix, AZ", "Denver, CO", "Salt Lake City, UT", "Omaha, NE", "Fargo, ND", "Philadelphia, PA", "Pittsburgh, PA", "Cincinnati, OH", "San Diego, CA", "Honolulu, HI", "Anchorage, AK", "Detroit, MI", "New Orleans, LA", "Washington D.C.", "Atlanta, GA", "Tampa, FL", "Orlando, FL");
+                if (character.city != "Washington D.C.")
+                {
+                    character.state = character.city.Substring(character.city.Length - 2, 2);
+                }
+                character.city = character.city.Substring(0, character.city.Length - 4);
             }
             else if (character.country == "Canada")
             {
-                character.city = ChooseFrom("Toronto", "Montreal", "Vancouver", "Calgary", "Edmonton", "Ottawa", "Quebec City", "Winnipeg", "Saskatoon", "Regina", "Victoria", "Thunder Bay", "Mississauga", "London", "Windsor", "Halifax", "St. John's", "Yellowknife", "Whitehorse", "Iqaluit");
+                character.city = ChooseFrom("Toronto, ON", "Montreal, QC", "Vancouver, BC", "Calgary, AB", "Edmonton, AB", "Ottawa, ON", "Quebec City, QC", "Winnipeg, MB", "Saskatoon, SK", "Regina, SK", "Victoria, BC", "Thunder Bay, ON", "Mississauga, ON", "London, ON", "Windsor, ON", "Halifax, NS", "St. John's, NL", "Yellowknife, NT", "Whitehorse, YT", "Iqaluit, NU");
+                character.state = character.city.Substring(character.city.Length - 2, 2);
+                character.city = character.city.Substring(0, character.city.Length - 4);
             }
             else if (character.country == "Mexico")
             {
                 character.city = ChooseFrom("Mexico City", "Mexico City", "Guadalajara", "Puebla", "Juarez", "Tijuana", "Cancun", "Chihuahua");
             }
+            else if (character.country == "Argentina")
+            {
+                character.city = ChooseFrom("Buenoas Aires", "Cordoba", "Rosario", "La Plata");
+            }
+            else if (character.country == "Cuba")
+            {
+                character.city = ChooseFrom("Havana", "Santiago de Cuba", "Camagüey");
+            }
+            else if (character.country == "China")
+            {
+                character.city = ChooseFrom("Beijing", "Shanghai", "Chongqing", "Shenzen", "Tianjing", "Guangzhou", "Wuhan", "Nanjing", "Chengdu", "Harbin", "Xi'an", "Hangzhou");
+            }
 
             // Ethnicity
             if (character.country == "United States")
             {
-                if (character.city == "Honolulu")
+                /*if (character.city == "Honolulu")
                 {
                     character.ethnicGroup = ChooseFrom(new DataClass("white", 15), new DataClass("latino", 0), new DataClass("black", 0), new DataClass("east asian", 30), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 52));
                 }
@@ -76,7 +96,7 @@ public class GameManager : MonoBehaviour
                 {
                     character.ethnicGroup = ChooseFrom(new DataClass("white", 25), new DataClass("latino", 35), new DataClass("black", 20), new DataClass("east asian", 15), new DataClass("south asian", 2), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 1));
                 }
-                else if (character.city == "New Orleans" || character.city == "Jackson" || character.city == "Birmingham" || character.city == "Little Rock")
+                else if (character.city == "New Orleans" || character.city == "Jackson" || character.city == "Birmingham" || character.city == "Little Rock" || character.city == "Charlotte" || character.city == "Charleston" || character.city == "Washington D.C." || character.city == "Atlanta" || character.city == "Baltimore" || character.city == "Raleigh")
                 {
                     character.ethnicGroup = ChooseFrom(new DataClass("white", 21), new DataClass("latino", 10), new DataClass("black", 60), new DataClass("east asian", 5), new DataClass("south asian", 2), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 0));
                 }
@@ -92,9 +112,19 @@ public class GameManager : MonoBehaviour
                 {
                     character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 0), new DataClass("black", 3), new DataClass("east asian", 5), new DataClass("south asian", 2), new DataClass("middle eastern", 3), new DataClass("native american", 7), new DataClass("pacific islander", 0), new DataClass("inuit", 30));
                 }
-                else
+                else*/
                 {
-                    character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 20), new DataClass("black", 15), new DataClass("east asian", 5), new DataClass("south asian", 5), new DataClass("middle eastern", 3), new DataClass("native american", 1), new DataClass("pacific islander", 1));
+                    character.ethnicGroup = ChooseFrom
+                        (
+                        new DataClass(ChooseFrom("white", new DataClass("latino", 3), new DataClass("black", 2), new DataClass("east asian", 1), new DataClass("south asian", 1), new DataClass("middle eastern", 2), new DataClass("native american", 1), new DataClass("pacific islander", 1)), 50), 
+                        new DataClass(ChooseFrom("latino", new DataClass("white", 3), new DataClass("black", 2), new DataClass("east asian", 1), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 10), new DataClass("pacific islander", 1)), 20), 
+                        new DataClass(ChooseFrom("black", new DataClass("latino", 2), new DataClass("white", 4), new DataClass("east asian", 1), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 1)), 15), 
+                        new DataClass(ChooseFrom("east asian", new DataClass("latino", 1), new DataClass("black", 2), new DataClass("white", 3), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 1)), 5), 
+                        new DataClass(ChooseFrom("south asian", new DataClass("latino", 1), new DataClass("black", 2), new DataClass("east asian", 3), new DataClass("white", 2), new DataClass("middle eastern", 1), new DataClass("native american", 1), new DataClass("pacific islander", 1)), 5), 
+                        new DataClass(ChooseFrom("middle eastern", new DataClass("latino", 1), new DataClass("black", 2), new DataClass("east asian", 1), new DataClass("south asian", 1), new DataClass("white", 4), new DataClass("native american", 1), new DataClass("pacific islander", 1)), 3), 
+                        new DataClass(ChooseFrom("native american", new DataClass("latino", 3), new DataClass("black", 2), new DataClass("east asian", 1), new DataClass("south asian", 1), new DataClass("middle eastern", 2), new DataClass("white", 1), new DataClass("pacific islander", 1)), 1), 
+                        new DataClass(ChooseFrom("pacific islander", new DataClass("latino", 1), new DataClass("black", 1), new DataClass("east asian", 5), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 2), new DataClass("white", 3)), 1)
+                        );
                 }
             }
             else if (character.country == "Canada")
@@ -112,32 +142,9 @@ public class GameManager : MonoBehaviour
                     character.ethnicGroup = ChooseFrom(new DataClass("white", 56), new DataClass("latino", 1), new DataClass("black", 5), new DataClass("east asian", 11), new DataClass("south asian", 13), new DataClass("middle eastern", 9), new DataClass("native american", 5), new DataClass("pacific islander", 0));
                 }
             }
-            else if (character.country == "Mexico")
+            else if (character.country == "Mexico" || character.country == "Argentina" || character.country == "Cuba")
             {
-                character.ethnicGroup = "latino";
-            }
-            
-            if (character.ethnicGroup == "white")
-            {
-                character.ethnicGroup2 = ChooseFrom(new DataClass(null, 80), new DataClass("latino", 3), new DataClass("black", 10), new DataClass("east asian", 2), new DataClass("south asian", 1), new DataClass("middle eastern", 1), new DataClass("native american", 3), new DataClass("pacific islander", 0));
-            }
-            else
-            {
-                character.ethnicGroup2 = ChooseFrom(new DataClass(null, 70), new DataClass("white", 10), new DataClass("black", 7), new DataClass("east asian", 4), new DataClass("south asian", 2), new DataClass("middle eastern", 2), new DataClass("native american", 3), new DataClass("pacific islander", 2));
-            }
-
-            if (character.ethnicGroup == character.ethnicGroup2)
-            {
-                character.ethnicGroup2 = null;
-            }
-
-            if (character.ethnicGroup2 == null)
-            {
-                character.ethnicity = character.ethnicGroup;
-            }
-            else
-            {
-                character.ethnicity = character.ethnicGroup + "/" + character.ethnicGroup2;
+                character.ethnicGroup = ChooseFrom("latino", new DataClass("white", 25), new DataClass("black", 5), new DataClass("east asian", 1), new DataClass("native american", 25));
             }
 
             // First name
@@ -149,7 +156,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (character.gender == "female")
                 {
-                    character.firstName = ChooseFrom("Mary", "Jessica", "Julia", "Amy", "Sarah", "Toni", "Rosie", "Maria", "Jennifer", "Rachel", "Sam", "Alondra");
+                    character.firstName = ChooseFrom("Diana", "Mary", "Jessica", "Julia", "Amy", "Sarah", "Toni", "Rosie", "Maria", "Jennifer", "Rachel", "Sam", "Alondra");
                 }
                 else if (character.gender == "other")
                 {
@@ -164,7 +171,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (character.gender == "female")
                 {
-                    character.firstName = ChooseFrom("Saanvi", "Kiara", "Diya", "Aditi", "Sarah", "Priyanka", "Fatima", "Sri", "Sruthi", "Rachel", "Anika", "Vanya");
+                    character.firstName = ChooseFrom("Diana", "Saanvi", "Kiara", "Diya", "Aditi", "Sarah", "Priyanka", "Fatima", "Sri", "Sruthi", "Rachel", "Anika", "Vanya");
                 }
                 else if (character.gender == "other")
                 {
@@ -179,7 +186,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (character.gender == "female")
                 {
-                    character.firstName = ChooseFrom("Zahirah", "Khadijah", "Nur", "Laila", "Sarah", "Maryam", "Fatima", "Lena", "Amira", "Rachel", "Aisha", "Salma");
+                    character.firstName = ChooseFrom("Diana", "Zahirah", "Khadijah", "Nur", "Laila", "Sarah", "Maryam", "Fatima", "Lena", "Amira", "Rachel", "Aisha", "Salma");
                 }
                 else if (character.gender == "other")
                 {
@@ -194,7 +201,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (character.gender == "female")
                 {
-                    character.firstName = ChooseFrom("Mary", "Jessica", "Julia", "Karen", "Amy", "Cindy", "Sarah", "Darlene", "Leanne", "Inga", "Toni", "Rosie", "Jennifer", "Rachel", "Sam");
+                    character.firstName = ChooseFrom("Diana", "Mary", "Jessica", "Julia", "Karen", "Amy", "Cindy", "Sarah", "Darlene", "Leanne", "Inga", "Toni", "Rosie", "Jennifer", "Rachel", "Sam");
                 }
                 else if (character.gender == "other")
                 {
@@ -284,7 +291,14 @@ public class GameManager : MonoBehaviour
             }
 
             float inches = character.height * 0.393701f;
-            character.heightFeetAndInches = (inches / 12).ToString().Substring(0, 1) + "ft " + Mathf.Round(inches % 12) + "in";
+            if (Mathf.Round(inches % 12) == 12)
+            {
+                character.heightFeetAndInches = ((inches / 12) + 1).ToString().Substring(0, 1) + "ft " + 0 + "in";
+            }
+            else
+            {
+                character.heightFeetAndInches = (inches / 12).ToString().Substring(0, 1) + "ft " + Mathf.Round(inches % 12) + "in";
+            }
 
             // Occupation
             if (character.age < 27)
@@ -306,26 +320,20 @@ public class GameManager : MonoBehaviour
             character.humourMax = Random.Range(20, 100);
             character.flirtinessMax = Random.Range(20, 100);
             character.emotionalnessMax = Random.Range(20, 100);
-            
-            string friendliness;
-            string irritability;
-            string humour;
-            string flirtiness;
-            string emotionalness;
 
             if (character.friendlinessMax <= 40)
             {
                 character.friendlinessDescription = "very unfriendly";
             }
-            if (character.friendlinessMax <= 60)
+            if (character.friendlinessMax > 40 && character.friendlinessMax <= 60)
             {
                 character.friendlinessDescription = "standoffish";
             }
-            if (character.friendlinessMax <= 70)
+            if (character.friendlinessMax > 60 && character.friendlinessMax <= 80)
             {
                 character.friendlinessDescription = "warm";
             }
-            if (character.friendlinessMax <= 90)
+            if (character.friendlinessMax > 80)
             {
                 character.friendlinessDescription = "very friendly";
             }
@@ -334,15 +342,15 @@ public class GameManager : MonoBehaviour
             {
                 character.irritabilityDescription = "extremely hot-headed";
             }
-            if (character.irritabilityMax <= 60)
+            if (character.irritabilityMax > 40 && character.irritabilityMax <= 60)
             {
                 character.irritabilityDescription = "hot-headed";
             }
-            if (character.irritabilityMax <= 70)
+            if (character.irritabilityMax > 60 && character.irritabilityMax <= 80)
             {
                 character.irritabilityDescription = "congeinial";
             }
-            if (character.irritabilityMax <= 90)
+            if (character.irritabilityMax > 80)
             {
                 character.irritabilityDescription = "very level-headed";
             }
@@ -351,15 +359,15 @@ public class GameManager : MonoBehaviour
             {
                 character.flirtinessDescription = "asexual";
             }
-            if (character.flirtinessMax <= 60)
+            if (character.flirtinessMax > 40 && character.flirtinessMax <= 60)
             {
                 character.flirtinessDescription = "prudish";
             }
-            if (character.flirtinessMax <= 70)
+            if (character.flirtinessMax > 60 && character.flirtinessMax <= 80)
             {
                 character.flirtinessDescription = "flirtatious";
             }
-            if (character.flirtinessMax <= 90)
+            if (character.flirtinessMax > 80)
             {
                 character.flirtinessDescription = "highly flirtatious";
             }
@@ -368,15 +376,15 @@ public class GameManager : MonoBehaviour
             {
                 character.humourDescription = "boring";
             }
-            if (character.humourMax <= 60)
+            if (character.humourMax > 40 && character.humourMax <= 60)
             {
                 character.humourDescription = "slightly serious";
             }
-            if (character.humourMax <= 70)
+            if (character.humourMax > 60 && character.humourMax <= 80)
             {
-                character.humourDescription = "humourous";
+                character.humourDescription = "humorous";
             }
-            if (character.humourMax <= 90)
+            if (character.humourMax > 80)
             {
                 character.humourDescription = "a comical genius";
             }
@@ -385,26 +393,73 @@ public class GameManager : MonoBehaviour
             {
                 character.emotionalnessDescription = "an emotional wreck";
             }
-            if (character.emotionalnessMax <= 60)
+            if (character.emotionalnessMax > 40 && character.emotionalnessMax <= 60)
             {
                 character.emotionalnessDescription = "highly emotional";
             }
-            if (character.emotionalnessMax <= 70)
+            if (character.emotionalnessMax > 60 && character.emotionalnessMax <= 80)
             {
                 character.emotionalnessDescription = "quite reasonable emotionally";
             }
-            if (character.emotionalnessMax <= 90)
+            if (character.emotionalnessMax > 80)
             {
                 character.emotionalnessDescription = "very emotionally sound";
             }
             
             Debug.Log
                 (
-                character.firstName + " is from " + character.city + ", " + character.country + ".\n" +
-                character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.ethnicity + " and " + character.pronouns[2].ToLower() + " occupation is a" + character.occupation + ". " +
+                character.firstName + " is from " + character.city + ", " + character.state + ", " + character.country + ". " +
+                character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.ethnicGroup + " and " + character.pronouns[2].ToLower() + " occupation is a" + character.occupation + ". " +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.age + "-years-old and " + character.pronouns[5].ToLower() + " " + character.height + "cm/" + character.heightFeetAndInches + " tall.\n" +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.friendlinessDescription + ", " + character.irritabilityDescription + ", " + character.flirtinessDescription + ", " + character.humourDescription + ", and " + character.emotionalnessDescription + "."
                 );
+        }
+
+        while (rooms.Count < 18)
+        {
+            // Create a new room
+            Room room = new Room();
+            rooms.Add(room);
+
+            if (rooms.Count < 10)
+            {
+                room.name = "#10" + (rooms.Count) + " / " + characters[rooms.Count - 1].firstName + "'s Room";
+                room.owner = characters[rooms.Count - 1];
+            }
+            else if (rooms.Count >= 10 && rooms.Count < 12)
+            {
+                room.name = "#1" + (rooms.Count) + " / " + characters[rooms.Count - 1].firstName + "'s Room";
+                room.owner = characters[rooms.Count - 1];
+            }
+            else if (rooms.Count == 12)
+            {
+                room.name = "#112 / Your Room";
+            }
+            else if (rooms.Count == 13)
+            {
+                room.name = "Hallway";
+            }
+            else if (rooms.Count == 14)
+            {
+                room.name = "Kitchen";
+            }
+            else if (rooms.Count == 15)
+            {
+                room.name = "Dining Room";
+            }
+            else if (rooms.Count == 16)
+            {
+                room.name = "Pool";
+            }
+            else if (rooms.Count == 17)
+            {
+                room.name = "Gym";
+            }
+        }
+
+        for (int i = 0; i < rooms.Count - 1; i++)
+        {
+            Debug.Log(rooms[i].name);
         }
     }
 
@@ -445,6 +500,35 @@ public class GameManager : MonoBehaviour
         return things[Random.Range(0, things.Length)];
     }
 
+    public string ChooseFrom(string mainEthnicity, params DataClass[] things)
+    {
+        // Create a list of each bracket
+        List<Vector2> brackets = new List<Vector2>();
+        int previousPercentage = 0;
+        for (int i = 0; i < things.Length; i++)
+        {
+            if (things[i].percentage > 0)
+            {
+                brackets.Add(new Vector2(previousPercentage, previousPercentage + things[i].percentage - 1));
+                previousPercentage = previousPercentage + things[i].percentage;
+            }
+        }
+
+        // Choose a random number to determine what is selected
+        int selectedNumber = Random.Range(0, 99);
+
+        // Attribute the selected bracket to a string
+        for (int i = 0; i < things.Length; i++)
+        {
+            if (selectedNumber >= brackets[i].x && selectedNumber <= brackets[i].y)
+            {
+                return mainEthnicity + "/" + things[i].word;
+            }
+        }
+
+        return mainEthnicity;
+    }
+
     public string ChooseFrom(params DataClass[] things)
     {
         // Create a list of each bracket
@@ -472,35 +556,6 @@ public class GameManager : MonoBehaviour
         }
 
         return null;
-    }
-
-    public string ToCapitalise(string word)
-    {
-        string newWord = "";
-
-        if (word != null)
-        {
-            for (int i = 0; i < word.Length; i++)
-            {
-                if (i == 0)
-                {
-                    newWord += word.Substring(0, 1).ToUpper();
-                }
-                else
-                {
-                    if (word[i - 1] == ' ' || word[i - 1] == '.')
-                    {
-                        newWord += word[i].ToString().ToUpper();
-                    }
-                    else
-                    {
-                        newWord += word[i];
-                    }
-                }
-            }
-        }
-
-        return newWord;
     }
 }
 

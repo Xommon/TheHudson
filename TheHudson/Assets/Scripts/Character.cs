@@ -9,6 +9,7 @@ public class Character
     public List<string> pronouns = new List<string>();
     public string country;
     public string city;
+    public string state;
     public string ethnicGroup;
     public string ethnicGroup2;
     public string ethnicity;
