@@ -10,6 +10,7 @@ public class Character
     public string country;
     public string city;
     public string state;
+    public string cityAndState;
     public string ethnicGroup;
     public string ethnicGroup2;
     public string ethnicity;

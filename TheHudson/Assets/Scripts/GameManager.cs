@@ -50,27 +50,20 @@ public class GameManager : MonoBehaviour
             }
 
             // Country
-            character.country = ChooseFrom(new DataClass("United States", 100), new DataClass("Canada", 25), new DataClass("Mexico", 15), new DataClass("Argentina", 5), new DataClass("Cuba", 5));
+            character.country = ChooseFrom(new DataClass("United States", 50), new DataClass("Canada", 25), new DataClass("Mexico", 15), new DataClass("Argentina", 5), new DataClass("Cuba", 5));
 
             // City and State
             if (character.country == "United States")
             {
                 character.city = ChooseFrom("New York, NY", "Brooklyn, NY", "Queens, NY", "The Bronx, NY", "Staten Island, NY", "Los Angeles, CA", "Chicago, IL", "Seattle, WA", "Portland, OR", "Charlotte, NC", "Burlington, VT", "Virginia Beach, VA", "Las Vegas, NV", "Madison, WI", "Green Bay, WI", "Oklahoma City, OK", "Charleston, WV", "Charlestone, SC", "Iowa City, IA", "Des Moines, IA", "San Jose, TX", "Oakland, CA", "Evanston, IL", "Wichita, KS", "Louisville, KY", "Topeka, KS", "San Francisco, CA", "San Antonio, TX", "Jacksonville, FL", "Memphis, TN", "Nashville, TN", "Raleigh, NC", "Richmond, VA", "Baltimore, MD", "Jackson, MS", "Manchester, NH", "Newark, NJ", "Jersey City, NJ", "Buffalo, NY", "Little Rock, AR", "Sioux Falls, SD", "Boise, ID", "Billings, MT", "Cheyenne, WY", "Birmingham, AL", "Houston, TX", "Dallas, TX", "Albuquerque, NM", "Austin, TX", "Milwaukee, WI", "Minneapolis, MN", "St. Paul, MN", "Duluth, MN", "Columbus, OH", "Dayton, OH", "Cleveland, OH", "Indianapolis, IN", "Fort Wayne, IN", "Kansas City, MO", "St. Louis, MO", "Miami, FL", "Boston, MA", "Providence, RI", "Phoenix, AZ", "Denver, CO", "Salt Lake City, UT", "Omaha, NE", "Fargo, ND", "Philadelphia, PA", "Pittsburgh, PA", "Cincinnati, OH", "San Diego, CA", "Honolulu, HI", "Anchorage, AK", "Detroit, MI", "New Orleans, LA", "Washington D.C.", "Atlanta, GA", "Tampa, FL", "Orlando, FL");
-                if (character.city != "Washington D.C.")
-                {
-                    character.state = character.city.Substring(character.city.Length - 2, 2);
-                }
-                character.city = character.city.Substring(0, character.city.Length - 4);
             }
             else if (character.country == "Canada")
             {
                 character.city = ChooseFrom("Toronto, ON", "Montreal, QC", "Vancouver, BC", "Calgary, AB", "Edmonton, AB", "Ottawa, ON", "Quebec City, QC", "Winnipeg, MB", "Saskatoon, SK", "Regina, SK", "Victoria, BC", "Thunder Bay, ON", "Mississauga, ON", "London, ON", "Windsor, ON", "Halifax, NS", "St. John's, NL", "Yellowknife, NT", "Whitehorse, YT", "Iqaluit, NU");
-                character.state = character.city.Substring(character.city.Length - 2, 2);
-                character.city = character.city.Substring(0, character.city.Length - 4);
             }
             else if (character.country == "Mexico")
             {
-                character.city = ChooseFrom("Mexico City", "Mexico City", "Guadalajara", "Puebla", "Juarez", "Tijuana", "Cancun", "Chihuahua");
+                character.city = ChooseFrom("Mexico City, CDMX", "Guadalajara, JAL.", "Puebla, PUE.", "Juarez, CHIH", "Tijuana, B.C.", "Cancun, Q.R.", "Chihuahua, CHIH");
             }
             else if (character.country == "Argentina")
             {
@@ -83,6 +76,21 @@ public class GameManager : MonoBehaviour
             else if (character.country == "China")
             {
                 character.city = ChooseFrom("Beijing", "Shanghai", "Chongqing", "Shenzen", "Tianjing", "Guangzhou", "Wuhan", "Nanjing", "Chengdu", "Harbin", "Xi'an", "Hangzhou");
+            }
+
+            if (character.city != "Washington D.C." && (character.city[character.city.Length - 3] == ' ' && character.city[character.city.Length - 5] == ' '))
+            {
+                character.state = character.city.Substring(character.city.Length - 2, 2);
+                character.city = character.city.Substring(0, character.city.Length - 4);
+            }
+
+            if (character.state != null)
+            {
+                character.cityAndState = character.city + ", " + character.state;
+            }
+            else
+            {
+                character.cityAndState = character.city;
             }
 
             // Ethnicity
@@ -142,9 +150,13 @@ public class GameManager : MonoBehaviour
                     character.ethnicGroup = ChooseFrom(new DataClass("white", 56), new DataClass("latino", 1), new DataClass("black", 5), new DataClass("east asian", 11), new DataClass("south asian", 13), new DataClass("middle eastern", 9), new DataClass("native american", 5), new DataClass("pacific islander", 0));
                 }
             }
-            else if (character.country == "Mexico" || character.country == "Argentina" || character.country == "Cuba")
+            else if (character.country == "Mexico")
             {
                 character.ethnicGroup = ChooseFrom("latino", new DataClass("white", 25), new DataClass("black", 5), new DataClass("east asian", 1), new DataClass("native american", 25));
+            }
+            else if (character.country == "Argentina" || character.country == "Cuba")
+            {
+                character.ethnicGroup = ChooseFrom("latino", new DataClass("white", 50), new DataClass("black", 1), new DataClass("east asian", 1), new DataClass("native american", 3));
             }
 
             // First name
@@ -408,14 +420,14 @@ public class GameManager : MonoBehaviour
             
             Debug.Log
                 (
-                character.firstName + " is from " + character.city + ", " + character.state + ", " + character.country + ". " +
+                character.firstName + " is from " + character.cityAndState + ", " + character.country + ". " +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.ethnicGroup + " and " + character.pronouns[2].ToLower() + " occupation is a" + character.occupation + ". " +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.age + "-years-old and " + character.pronouns[5].ToLower() + " " + character.height + "cm/" + character.heightFeetAndInches + " tall.\n" +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.friendlinessDescription + ", " + character.irritabilityDescription + ", " + character.flirtinessDescription + ", " + character.humourDescription + ", and " + character.emotionalnessDescription + "."
                 );
         }
 
-        while (rooms.Count < 18)
+        while (rooms.Count < 20)
         {
             // Create a new room
             Room room = new Room();
@@ -454,6 +466,14 @@ public class GameManager : MonoBehaviour
             else if (rooms.Count == 17)
             {
                 room.name = "Gym";
+            }
+            else if (rooms.Count == 18)
+            {
+                room.name = "Bar";
+            }
+            else if (rooms.Count == 19)
+            {
+                room.name = "Deck";
             }
         }
 
