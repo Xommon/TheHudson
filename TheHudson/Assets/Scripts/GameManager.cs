@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
     public List<Room> rooms = new List<Room>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Create the characters
-        while (characters.Count < 11)
+        while (characters.Count < 12)
         {
             // Create a new character
             Character character = new Character();
@@ -23,34 +23,43 @@ public class GameManager : MonoBehaviour
             // Pronouns
             if (character.gender == "male")
             {
-                character.pronouns.Add("He");
-                character.pronouns.Add("Him");
-                character.pronouns.Add("His");
-                character.pronouns.Add("His");
-                character.pronouns.Add("Himself");
-                character.pronouns.Add("Is");
+                character.pronouns.Add("He"); // 0
+                character.pronouns.Add("Him"); // 1
+                character.pronouns.Add("His"); // 2
+                character.pronouns.Add("His"); // 3
+                character.pronouns.Add("Himself"); // 4
+                character.pronouns.Add("Is"); // 5
+                character.pronouns.Add("Mr. "); // 6
+                character.pronouns.Add("Man"); // 7
+                character.pronouns.Add("Was"); // 8
             }
             else if (character.gender == "female")
             {
-                character.pronouns.Add("She");
-                character.pronouns.Add("Her");
-                character.pronouns.Add("Her");
-                character.pronouns.Add("Hers");
-                character.pronouns.Add("Herself");
-                character.pronouns.Add("Is");
+                character.pronouns.Add("She"); // 0
+                character.pronouns.Add("Her"); // 1
+                character.pronouns.Add("Her"); // 2
+                character.pronouns.Add("Hers"); // 3
+                character.pronouns.Add("Herself"); // 4
+                character.pronouns.Add("Is"); // 5
+                character.pronouns.Add("Ms. "); // 6
+                character.pronouns.Add("Woman"); // 7
+                character.pronouns.Add("Was"); // 8
             }
             else if (character.gender == "other")
             {
-                character.pronouns.Add("They");
-                character.pronouns.Add("Them");
-                character.pronouns.Add("Their");
-                character.pronouns.Add("Theirs");
-                character.pronouns.Add("Themself");
-                character.pronouns.Add("Are");
+                character.pronouns.Add("They"); // 0
+                character.pronouns.Add("Them"); // 1
+                character.pronouns.Add("Their"); // 2
+                character.pronouns.Add("Theirs"); // 3
+                character.pronouns.Add("Themself"); // 4
+                character.pronouns.Add("Are"); // 5
+                character.pronouns.Add("Mx. "); // 6
+                character.pronouns.Add("Person"); // 7
+                character.pronouns.Add("Were"); // 8
             }
 
             // Country
-            character.country = ChooseFrom(new DataClass("United States", 50), new DataClass("Canada", 25), new DataClass("Mexico", 15), new DataClass("Argentina", 5), new DataClass("Cuba", 5));
+            character.country = ChooseFrom(new DataClass("United States", 45), new DataClass("Canada", 25), new DataClass("Mexico", 15), new DataClass("Argentina", 5), new DataClass("Cuba", 5), new DataClass("Singapore", 5));
 
             // City and State
             if (character.country == "United States")
@@ -67,7 +76,7 @@ public class GameManager : MonoBehaviour
             }
             else if (character.country == "Argentina")
             {
-                character.city = ChooseFrom("Buenoas Aires", "Cordoba", "Rosario", "La Plata");
+                character.city = ChooseFrom("Buenos Aires", "Cordoba", "Rosario", "La Plata");
             }
             else if (character.country == "Cuba")
             {
@@ -78,7 +87,7 @@ public class GameManager : MonoBehaviour
                 character.city = ChooseFrom("Beijing", "Shanghai", "Chongqing", "Shenzen", "Tianjing", "Guangzhou", "Wuhan", "Nanjing", "Chengdu", "Harbin", "Xi'an", "Hangzhou");
             }
 
-            if (character.city != "Washington D.C." && (character.city[character.city.Length - 3] == ' ' && character.city[character.city.Length - 5] == ' '))
+            if (character.city != null && character.city != "Washington D.C." && (character.city[character.city.Length - 3] == ' ' && character.city[character.city.Length - 5] == ' '))
             {
                 character.state = character.city.Substring(character.city.Length - 2, 2);
                 character.city = character.city.Substring(0, character.city.Length - 4);
@@ -91,6 +100,15 @@ public class GameManager : MonoBehaviour
             else
             {
                 character.cityAndState = character.city;
+            }
+
+            if (character.city != null)
+            {
+                character.location = character.cityAndState + ", " + character.country;
+            }
+            else
+            {
+                character.location = character.country;
             }
 
             // Ethnicity
@@ -143,7 +161,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (character.city == "Yellowknife" || character.city == "Iqaluit")
                 {
-                    character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 0), new DataClass("black", 3), new DataClass("east asian", 4), new DataClass("south asian", 3), new DataClass("middle eastern", 3), new DataClass("native american", 32), new DataClass("pacific islander", 0), new DataClass("inuit", 5));
+                    character.ethnicGroup = ChooseFrom(new DataClass("white", 50), new DataClass("latino", 0), new DataClass("black", 0), new DataClass("east asian", 4), new DataClass("south asian", 3), new DataClass("middle eastern", 3), new DataClass("native american", 33), new DataClass("pacific islander", 0), new DataClass("inuit", 7));
                 }
                 else
                 {
@@ -157,6 +175,10 @@ public class GameManager : MonoBehaviour
             else if (character.country == "Argentina" || character.country == "Cuba")
             {
                 character.ethnicGroup = ChooseFrom("latino", new DataClass("white", 50), new DataClass("black", 1), new DataClass("east asian", 1), new DataClass("native american", 3));
+            }
+            else if (character.country == "Singapore")
+            {
+                character.ethnicGroup = ChooseFrom(new DataClass("east asian", 87), new DataClass("south asian", 13), 2);
             }
 
             // First name
@@ -222,7 +244,38 @@ public class GameManager : MonoBehaviour
             }
 
             // Last name
-            character.lastName = "Smith";
+            if (character.ethnicGroup == "white" || character.ethnicGroup == "native american")
+            {
+                character.lastName = ChooseFrom("Williams", "Johnson", "Smith", "Jones", "Brown", "Jackson", "Davis", "Thomas", "Harris", "Robinson", "Taylor", "Wilson", "Moore", "White", "Lewis", "Walker", "Green", "Washington", "Thompson", "Anderson", "Scott", "Carter", "Graves", "George", "Sanders", "McKenzie", "McNulty", "Nutt", "Shoemacher", "Weinstein", "Goldstein", "Blick", "Kingston", "Quentin", "Belle");
+            }
+            else if (character.ethnicGroup == "black")
+            {
+                character.lastName = ChooseFrom("Williams", "Johnson", "Smith", "Jones", "Brown", "Jackson", "Davis", "Thomas", "Harris", "Robinson", "Taylor", "Wilson", "Moore", "White", "Lewis", "Walker", "Green", "Washington", "Thompson", "Anderson", "Scott", "Carter");
+            }
+            else if (character.ethnicGroup == "latino")
+            {
+                character.lastName = ChooseFrom("Hernández", "García", "Martínez", "González", "Rodríguez", "Pérez", "Sánchez", "Ramírez", "Fernández", "Ruiz", "Gutiérrez");
+            }
+            else if (character.ethnicGroup == "east asian")
+            {
+                character.lastName = ChooseFrom("Wang", "Li", "Zhang", "Liu", "Chen", "Yang", "Huang", "Zhao", "Kim", "Lee", "Park", "Choi", "Jeong", "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto", "Nakamura", "Nguyen", "Huynh", "Dang");
+            }
+            else if (character.ethnicGroup == "south asian")
+            {
+                character.lastName = ChooseFrom("Kumar", "Sharma", "Shan", "Khan", "Patel", "Laghari", "Arya", "Bhatt", "Varma", "Chawla", "Lal", "Mangal", "Kohli", "Molhotra", "Jain", "Khanna", "Ghosh", "Dhar");
+            }
+            else if (character.ethnicGroup == "middle eastern")
+            {
+                character.lastName = ChooseFrom("Ali", "Abdallah", "Ahmad", "Abadi", "Bakir", "Baghdadi", "Bilal", "Darwish", "Ebeid", "Fadel", "Faez", "Faheem", "Farhat", "Farouq", "Farsi", "Fasil", "Habib", "Hakim", "Hussein", "Ibrahim", "Iqbal", "Jameel", "Marwan", "Noor", "Taleb", "Sultan", "Wahed", "Yusuf", "Zaman");
+            }
+            else if (character.ethnicGroup == "pacific islander")
+            {
+                character.lastName = ChooseFrom("Kahale", "Mahoe", "'Opunui", "Kelekolio", "Ka'ana'ana", "Henare", "Ngata", "Parata", "Rewi", "Taumata", "Turei", "Williams", "Johnson", "Smith", "Jones", "Brown", "Jackson", "Davis", "Thomas", "Harris", "Robinson", "Taylor", "Wilson", "Moore");
+            }
+            else if (character.ethnicGroup == "inuit")
+            {
+                character.lastName = ChooseFrom("Aluq", "Alluluk", "Aleqasina", "Akimayuq", "Eyuka", "Inoudtliak", "Itakulla", "Iqirquq", "Kablutsiak", "Kaitanak", "Mupaloo", "Nakyuraq", "Naqi", "Ooa", "Pitseolak");
+            }
 
             // Age
             if (PercentChance(76))
@@ -420,7 +473,7 @@ public class GameManager : MonoBehaviour
             
             Debug.Log
                 (
-                character.firstName + " is from " + character.cityAndState + ", " + character.country + ". " +
+                character.firstName + " is from " + character.location + ". " +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.ethnicGroup + " and " + character.pronouns[2].ToLower() + " occupation is a" + character.occupation + ". " +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.age + "-years-old and " + character.pronouns[5].ToLower() + " " + character.height + "cm/" + character.heightFeetAndInches + " tall.\n" +
                 character.pronouns[0] + " " + character.pronouns[5].ToLower() + " " + character.friendlinessDescription + ", " + character.irritabilityDescription + ", " + character.flirtinessDescription + ", " + character.humourDescription + ", and " + character.emotionalnessDescription + "."
@@ -515,11 +568,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Choose from any argument randomly
     public string ChooseFrom(params string[] things)
     {
         return things[Random.Range(0, things.Length)];
     }
 
+    // Choose the first argument mixed with any subsequent argument randomly
     public string ChooseFrom(string mainEthnicity, params DataClass[] things)
     {
         // Create a list of each bracket
@@ -549,6 +604,7 @@ public class GameManager : MonoBehaviour
         return mainEthnicity;
     }
 
+    // Choose from any argument at a specific percentage
     public string ChooseFrom(params DataClass[] things)
     {
         // Create a list of each bracket
@@ -576,6 +632,30 @@ public class GameManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    // Choose either of the two arguments with a possibility of mixing both at a specific percentage
+    public string ChooseFrom(DataClass option1, DataClass option2, int percentage)
+    {
+        // Choose a random number to determine what is selected
+        int selectedNumber = Random.Range(0, 99);
+
+        // Determine whether to mix the two options or choose one separately
+        if (selectedNumber < percentage)
+        {
+            return option1.word + "/" + option2.word;
+        }
+        else
+        {
+            if (PercentChance(option1.percentage - 1))
+            {
+                return option1.word;
+            }
+            else
+            {
+                return option2.word;
+            }
+        }
     }
 }
 
