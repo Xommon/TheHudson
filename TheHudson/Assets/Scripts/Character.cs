@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Character
 {
     // Physical Characteristics
@@ -22,6 +23,7 @@ public class Character
     public string heightFeetAndInches;
     public string occupation;
     public string nonProfitName;
+    public Room inRoom;
 
     // Personality
     [Range(0f, 1f)]

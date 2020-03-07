@@ -1,15 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public List<Character> characters = new List<Character>();
-    public List<Room> rooms = new List<Room>();
+    // Reference
+    public static GameManager instance;
+    public TextMesh time;
 
-    // Start is called before the first frame update
+    // Character management
+    public RectTransform characterPanel;
+    public List<Character> characters = new List<Character>();
+    public List<Character> charactersInScene = new List<Character>();
+
+    // Room management
+    public List<Room> rooms = new List<Room>();
+    public int minutes;
+    public int hours;
+    
     void Awake()
     {
+        instance = this;
+
+        // Set Time
+        hours = 9;
+        minutes = 0;
+
         // Create the characters
         while (characters.Count < 12)
         {
@@ -59,12 +76,12 @@ public class GameManager : MonoBehaviour
             }
 
             // Country
-            character.country = ChooseFrom(new DataClass("United States", 45), new DataClass("Canada", 25), new DataClass("Mexico", 15), new DataClass("Argentina", 5), new DataClass("Cuba", 5), new DataClass("Singapore", 5));
+            character.country = ChooseFrom(new DataClass("United States", 60), new DataClass("Canada", 20), new DataClass("Mexico", 5), new DataClass("Argentina", 5), new DataClass("Cuba", 5), new DataClass("Singapore", 5));
 
             // City and State
             if (character.country == "United States")
             {
-                character.city = ChooseFrom("New York, NY", "Brooklyn, NY", "Queens, NY", "The Bronx, NY", "Staten Island, NY", "Los Angeles, CA", "Chicago, IL", "Seattle, WA", "Portland, OR", "Charlotte, NC", "Burlington, VT", "Virginia Beach, VA", "Las Vegas, NV", "Madison, WI", "Green Bay, WI", "Oklahoma City, OK", "Charleston, WV", "Charlestone, SC", "Iowa City, IA", "Des Moines, IA", "San Jose, TX", "Oakland, CA", "Evanston, IL", "Wichita, KS", "Louisville, KY", "Topeka, KS", "San Francisco, CA", "San Antonio, TX", "Jacksonville, FL", "Memphis, TN", "Nashville, TN", "Raleigh, NC", "Richmond, VA", "Baltimore, MD", "Jackson, MS", "Manchester, NH", "Newark, NJ", "Jersey City, NJ", "Buffalo, NY", "Little Rock, AR", "Sioux Falls, SD", "Boise, ID", "Billings, MT", "Cheyenne, WY", "Birmingham, AL", "Houston, TX", "Dallas, TX", "Albuquerque, NM", "Austin, TX", "Milwaukee, WI", "Minneapolis, MN", "St. Paul, MN", "Duluth, MN", "Columbus, OH", "Dayton, OH", "Cleveland, OH", "Indianapolis, IN", "Fort Wayne, IN", "Kansas City, MO", "St. Louis, MO", "Miami, FL", "Boston, MA", "Providence, RI", "Phoenix, AZ", "Denver, CO", "Salt Lake City, UT", "Omaha, NE", "Fargo, ND", "Philadelphia, PA", "Pittsburgh, PA", "Cincinnati, OH", "San Diego, CA", "Honolulu, HI", "Anchorage, AK", "Detroit, MI", "New Orleans, LA", "Washington D.C.", "Atlanta, GA", "Tampa, FL", "Orlando, FL");
+                character.city = ChooseFrom("New York, NY", "Brooklyn, NY", "Queens, NY", "The Bronx, NY", "Staten Island, NY", "Los Angeles, CA", "Chicago, IL", "Seattle, WA", "Portland, OR", "Charlotte, NC", "Burlington, VT", "Virginia Beach, VA", "Las Vegas, NV", "Madison, WI", "Green Bay, WI", "Oklahoma City, OK", "Charleston, WV", "Charleston, SC", "Iowa City, IA", "Des Moines, IA", "San Jose, TX", "Oakland, CA", "Evanston, IL", "Wichita, KS", "Louisville, KY", "Topeka, KS", "San Francisco, CA", "San Antonio, TX", "Jacksonville, FL", "Memphis, TN", "Nashville, TN", "Raleigh, NC", "Richmond, VA", "Baltimore, MD", "Jackson, MS", "Manchester, NH", "Newark, NJ", "Jersey City, NJ", "Buffalo, NY", "Little Rock, AR", "Sioux Falls, SD", "Boise, ID", "Billings, MT", "Cheyenne, WY", "Birmingham, AL", "Houston, TX", "Dallas, TX", "Albuquerque, NM", "Austin, TX", "Milwaukee, WI", "Minneapolis, MN", "St. Paul, MN", "Duluth, MN", "Columbus, OH", "Dayton, OH", "Cleveland, OH", "Indianapolis, IN", "Fort Wayne, IN", "Kansas City, MO", "St. Louis, MO", "Miami, FL", "Boston, MA", "Providence, RI", "Phoenix, AZ", "Denver, CO", "Salt Lake City, UT", "Omaha, NE", "Fargo, ND", "Philadelphia, PA", "Pittsburgh, PA", "Cincinnati, OH", "San Diego, CA", "Honolulu, HI", "Anchorage, AK", "Detroit, MI", "New Orleans, LA", "Washington D.C.", "Atlanta, GA", "Tampa, FL", "Orlando, FL");
             }
             else if (character.country == "Canada")
             {
@@ -244,35 +261,35 @@ public class GameManager : MonoBehaviour
             }
 
             // Last name
-            if (character.ethnicGroup == "white" || character.ethnicGroup == "native american")
+            if (character.ethnicGroup.Contains("white") || character.ethnicGroup.Contains("native american"))
             {
                 character.lastName = ChooseFrom("Williams", "Johnson", "Smith", "Jones", "Brown", "Jackson", "Davis", "Thomas", "Harris", "Robinson", "Taylor", "Wilson", "Moore", "White", "Lewis", "Walker", "Green", "Washington", "Thompson", "Anderson", "Scott", "Carter", "Graves", "George", "Sanders", "McKenzie", "McNulty", "Nutt", "Shoemacher", "Weinstein", "Goldstein", "Blick", "Kingston", "Quentin", "Belle");
             }
-            else if (character.ethnicGroup == "black")
+            else if (character.ethnicGroup.Contains("black"))
             {
                 character.lastName = ChooseFrom("Williams", "Johnson", "Smith", "Jones", "Brown", "Jackson", "Davis", "Thomas", "Harris", "Robinson", "Taylor", "Wilson", "Moore", "White", "Lewis", "Walker", "Green", "Washington", "Thompson", "Anderson", "Scott", "Carter");
             }
-            else if (character.ethnicGroup == "latino")
+            else if (character.ethnicGroup.Contains("latino"))
             {
                 character.lastName = ChooseFrom("Hernández", "García", "Martínez", "González", "Rodríguez", "Pérez", "Sánchez", "Ramírez", "Fernández", "Ruiz", "Gutiérrez");
             }
-            else if (character.ethnicGroup == "east asian")
+            else if (character.ethnicGroup.Contains("east asian"))
             {
                 character.lastName = ChooseFrom("Wang", "Li", "Zhang", "Liu", "Chen", "Yang", "Huang", "Zhao", "Kim", "Lee", "Park", "Choi", "Jeong", "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto", "Nakamura", "Nguyen", "Huynh", "Dang");
             }
-            else if (character.ethnicGroup == "south asian")
+            else if (character.ethnicGroup.Contains("south asian"))
             {
                 character.lastName = ChooseFrom("Kumar", "Sharma", "Shan", "Khan", "Patel", "Laghari", "Arya", "Bhatt", "Varma", "Chawla", "Lal", "Mangal", "Kohli", "Molhotra", "Jain", "Khanna", "Ghosh", "Dhar");
             }
-            else if (character.ethnicGroup == "middle eastern")
+            else if (character.ethnicGroup.Contains("middle eastern"))
             {
                 character.lastName = ChooseFrom("Ali", "Abdallah", "Ahmad", "Abadi", "Bakir", "Baghdadi", "Bilal", "Darwish", "Ebeid", "Fadel", "Faez", "Faheem", "Farhat", "Farouq", "Farsi", "Fasil", "Habib", "Hakim", "Hussein", "Ibrahim", "Iqbal", "Jameel", "Marwan", "Noor", "Taleb", "Sultan", "Wahed", "Yusuf", "Zaman");
             }
-            else if (character.ethnicGroup == "pacific islander")
+            else if (character.ethnicGroup.Contains("pacific islander"))
             {
                 character.lastName = ChooseFrom("Kahale", "Mahoe", "'Opunui", "Kelekolio", "Ka'ana'ana", "Henare", "Ngata", "Parata", "Rewi", "Taumata", "Turei", "Williams", "Johnson", "Smith", "Jones", "Brown", "Jackson", "Davis", "Thomas", "Harris", "Robinson", "Taylor", "Wilson", "Moore");
             }
-            else if (character.ethnicGroup == "inuit")
+            else if (character.ethnicGroup.Contains("inuit"))
             {
                 character.lastName = ChooseFrom("Aluq", "Alluluk", "Aleqasina", "Akimayuq", "Eyuka", "Inoudtliak", "Itakulla", "Iqirquq", "Kablutsiak", "Kaitanak", "Mupaloo", "Nakyuraq", "Naqi", "Ooa", "Pitseolak");
             }
@@ -480,7 +497,7 @@ public class GameManager : MonoBehaviour
                 );
         }
 
-        while (rooms.Count < 20)
+        while (rooms.Count < 23)
         {
             // Create a new room
             Room room = new Room();
@@ -528,11 +545,18 @@ public class GameManager : MonoBehaviour
             {
                 room.name = "Deck";
             }
-        }
-
-        for (int i = 0; i < rooms.Count - 1; i++)
-        {
-            Debug.Log(rooms[i].name);
+            else if (rooms.Count == 20)
+            {
+                room.name = "Sauna";
+            }
+            else if (rooms.Count == 21)
+            {
+                room.name = "Engine Room";
+            }
+            else if (rooms.Count == 22)
+            {
+                room.name = "Staff Quarters";
+            }
         }
     }
 
@@ -544,6 +568,13 @@ public class GameManager : MonoBehaviour
             Application.LoadLevel(Application.loadedLevel);
             Debug.ClearDeveloperConsole();
         }
+    }
+
+    public void GetCharacter(int index)
+    {
+        // Load character
+        //GameObject prefab = Resources.Load ("Prefabs/Char[" + index + "]" as GameObject);
+        //Instantiate(prefab);
     }
 
     public bool PercentChance(float percent)
@@ -656,6 +687,11 @@ public class GameManager : MonoBehaviour
                 return option2.word;
             }
         }
+    }
+
+    public string ChooseFrom(int white, int latino, int black, Vector4 eastAsianCJKM, Vector4 southeastAsianVTCB, Vector3 southAsianIPTam)
+    {
+        return "";
     }
 }
 

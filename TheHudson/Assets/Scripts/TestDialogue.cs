@@ -14,7 +14,7 @@ public class TestDialogue : MonoBehaviour
     {
         dialogue = DialogueSystem.instance;
 
-        s.Add("Welcome all to this VERY exlusive sponsorship event!");
+        s.Add("Welcome all to this very exlusive sponsorship event!");
         s.Add("I've gathered the greatest and most exceptional hard workers from around the world for a chance at a sizeable donation for their nonprofit organization! |false");
         s.Add("Let's go ahead and introduce everyone! |false");
         for (int i = 0; i < 12; i++)

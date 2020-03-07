@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2310241870430613370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2310241870430613348}
+  - component: {fileID: 2310241870430613349}
+  - component: {fileID: 2310241870430613350}
+  - component: {fileID: 2310241870430613351}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2310241870430613348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310241870430613370}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2310241870430613349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310241870430613370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce5d116945b5f14cad373d10c4477af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2310241870430613350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310241870430613370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf9c58445dd25f4dad558ba0ad52803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements:
+    speechPanel: {fileID: 0}
+    speakerNameText: {fileID: 0}
+    speechText: {fileID: 0}
+  isWaitingForUserInput: 1
+--- !u!114 &2310241870430613351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310241870430613370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6c6c66a500dd1429fdc4ba5786e4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 2310241870430613349}
+  testName: 
+  s:
+  - Welcome all to this very exlusive sponsorship event!
+  - I've gathered the greatest and most exceptional hard workers from around the world
+    for a chance at a sizeable donation for their nonprofit organization! |false
+  - Let's go ahead and introduce everyone! |false
+  - Mr. Aarav Laghari, from Singapore.|false
+  - Ms. Cindy Chen, from Vancouver, BC, Canada.|false
+  - Ms. Inga Jackson, from Ottawa, ON, Canada.|false
+  - Ms. Rachel Davis, from Philadelphia, PA, United States.|false
+  - Mr. Mark Wilson, from Thunder Bay, ON, Canada.|false
+  - Ms. Sarah Robinson, from Montreal, QC, Canada.|false
+  - Mr. David Thompson, from Toronto, ON, Canada.|false
+  - Ms. Amy , from Havana, Cuba.|false
+  - Ms. Diana Ruiz, from Buenos Aires, Argentina.|false
+  - Ms. Jennifer Davis, from Seattle, WA, United States.|false
+  - Ms. Jennifer Dang, from San Jose, TX, United States.|false
+  - Mr. Mark Watanabe, from Singapore.|false
+  - And last, but not least, Mx. Player from Country!
